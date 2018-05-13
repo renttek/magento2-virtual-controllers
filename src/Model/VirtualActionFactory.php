@@ -3,7 +3,7 @@
 namespace Renttek\VirtualControllers\Model;
 
 use Magento\Framework\ObjectManagerInterface;
-use Renttek\VirtualControllers\Controller\Index\Virtual;
+use Renttek\VirtualControllers\Controller\Virtual;
 
 /**
  * Class VirtualActionFactory
