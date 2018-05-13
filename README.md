@@ -1,6 +1,10 @@
 # Renttek_VirtualControllers
 
-This module enables developers to create "virtual controllers" via XML.
+Enables creating of routes with "virtual controllers"
+
+[![Latest Stable Version](https://poser.pugx.org/renttek/magento2-virtual-controllers/version)](https://packagist.org/packages/renttek/magento2-virtual-controllers)
+[![License](https://poser.pugx.org/renttek/magento2-virtual-controllers/license)](https://packagist.org/packages/renttek/magento2-virtual-controllers)
+
 What is a virtual controllers?
 A virtual controller is a path + an optional layout handle which will be set.
 With that it is possible to create custom routes where you can place custom blocks to your wishes.
