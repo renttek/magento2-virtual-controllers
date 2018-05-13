@@ -2,6 +2,7 @@
 
 Enables creating of routes with "virtual controllers"
 
+[![Build Status](https://travis-ci.org/renttek/magento2-virtual-controllers.svg?branch=master)](https://travis-ci.org/renttek/magento2-virtual-controllers)
 [![Latest Stable Version](https://poser.pugx.org/renttek/magento2-virtual-controllers/version)](https://packagist.org/packages/renttek/magento2-virtual-controllers)
 [![License](https://poser.pugx.org/renttek/magento2-virtual-controllers/license)](https://packagist.org/packages/renttek/magento2-virtual-controllers)
 
