@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="handleType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-Za-z]+)(_[A-Za-z]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="controllers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="controller" type="controllerDefinition" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="controllerDefinition">
+        <xs:attribute type="xs:string" name="path" use="required"/>
+        <xs:attribute type="handleType" name="handle"  />
+        <xs:attribute type="xs:boolean" name="disabled"/>
+    </xs:complexType>
+</xs:schema>
