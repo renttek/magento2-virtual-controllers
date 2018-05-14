@@ -3,7 +3,7 @@
     "description": "A module which enables developers to create virtual controllers in Magento 2",
     "type": "magento2-module",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Julian Nuß",
