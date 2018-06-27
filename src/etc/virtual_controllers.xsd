@@ -2,7 +2,13 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:simpleType name="handleType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="([A-Za-z]+)(_[A-Za-z]+)*"/>
+            <xs:pattern value="([A-Za-z0-9]+)(_[A-Za-z0-9]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="urlPartType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z0-9]+[a-z0-9\-_]*"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -10,6 +16,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="controller" type="controllerDefinition" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="forward" type="forwardDefinition" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -17,6 +24,14 @@
     <xs:complexType name="controllerDefinition">
         <xs:attribute type="xs:string" name="path" use="required"/>
         <xs:attribute type="handleType" name="handle"  />
+        <xs:attribute type="xs:boolean" name="disabled"/>
+    </xs:complexType>
+
+    <xs:complexType name="forwardDefinition">
+        <xs:attribute type="xs:string" name="path" use="required"/>
+        <xs:attribute type="urlPartType" name="module" use="required"/>
+        <xs:attribute type="urlPartType" name="controller" default="index"/>
+        <xs:attribute type="urlPartType" name="action" default="index"/>
         <xs:attribute type="xs:boolean" name="disabled"/>
     </xs:complexType>
 </xs:schema>

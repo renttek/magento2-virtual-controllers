@@ -2,12 +2,11 @@
 
 namespace Renttek\VirtualControllers\Test\Controller;
 
-use Magento\Framework\App\Request\Http;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Renttek\VirtualControllers\Controller\Router;
 use Renttek\VirtualControllers\Model\Config;
-use Renttek\VirtualControllers\Model\VirtualActionFactory;
+use Renttek\VirtualControllers\Model\ActionFactory;
 
 class RouterTest extends TestCase
 {
@@ -17,14 +16,9 @@ class RouterTest extends TestCase
     private $configMock;
 
     /**
-     * @var VirtualActionFactory|MockObject
+     * @var ActionFactory|MockObject
      */
-    private $virtualActionFactoryMock;
-
-    /**
-     * @var Http|MockObject
-     */
-    private $requestMock;
+    private $actionFactoryMock;
 
     /**
      * @var Router
@@ -37,127 +31,39 @@ class RouterTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->virtualActionFactoryMock = $this->getMockBuilder(VirtualActionFactory::class)
+        $this->actionFactoryMock = $this->getMockBuilder(ActionFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->requestMock = $this->getMockBuilder(Http::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->router = new Router($this->configMock, $this->virtualActionFactoryMock);
+        $this->router = new Router($this->configMock, $this->actionFactoryMock);
     }
 
-    public function testReadsPathInfoFromRequest()
-    {
-        $this->requestMock
-            ->expects(self::once())
-            ->method('getPathInfo');
-
-        $this->router->match($this->requestMock);
-    }
-
-    public function testReadsControllerConfigFromConfigModel()
+    public function testHandleActionReadsConfigFromModelWithGivenType()
     {
         $this->configMock
             ->expects(self::once())
             ->method('get')
-            ->with('controllers');
+            ->with('mytype');
 
-        $this->router->match($this->requestMock);
+        $this->router->handleAction('mytype', '');
     }
 
-    public function testReturnsNullIfPathIsNotFoundInConfig()
+    public function testReturnsNullIfNoConfigurationWasFoundForGivenType()
     {
-        self::assertNull($this->router->match($this->requestMock));
+        self::assertNull($this->router->handleAction('mytype', ''));
     }
 
-    public function testReturnsNullIfVirtualControllerIsDisabled()
+    public function testCallsActionFactoryIfMatchingConfigurationWasFound()
     {
-        $this->requestMock
-            ->method('getPathInfo')
-            ->willReturn('my/path');
-
         $this->configMock
             ->method('get')
-            ->willReturn(['my/path' => ['disabled' => true]]);
+            ->willReturn(['mypath' => []]);
 
-        self::assertNull($this->router->match($this->requestMock));
-    }
-
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
-     * @expectedExceptionMessage Undefined index: disabled
-     */
-    public function testControllerConfigMustHaveDisabledIndex()
-    {
-        $this->requestMock
-            ->method('getPathInfo')
-            ->willReturn('my/path');
-
-        $this->configMock
-            ->method('get')
-            ->willReturn(['my/path' => []]);
-
-        $this->router->match($this->requestMock);
-    }
-
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
-     * @expectedExceptionMessage Undefined index: path
-     */
-    public function testControllerConfigMustHavePathIndex()
-    {
-        $this->requestMock
-            ->method('getPathInfo')
-            ->willReturn('my/path');
-
-        $this->configMock
-            ->method('get')
-            ->willReturn(['my/path' => ['disabled' => false]]);
-
-        $this->router->match($this->requestMock);
-    }
-
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Notice
-     * @expectedExceptionMessage Undefined index: handle
-     */
-    public function testControllerConfigMustHaveHandleIndex()
-    {
-        $this->requestMock
-            ->method('getPathInfo')
-            ->willReturn('my/path');
-
-        $this->configMock
-            ->method('get')
-            ->willReturn(['my/path' => ['disabled' => false, 'path' => '']]);
-
-        $this->router->match($this->requestMock);
-    }
-
-    public function testCreatesAnActionWithPathAndHandleFromControllerConfig()
-    {
-        $this->requestMock
-            ->method('getPathInfo')
-            ->willReturn('my/path');
-
-        $this->configMock
-            ->method('get')
-            ->willReturn([
-                'my/path' => [
-                    'path'     => 'my/path',
-                    'handle'   => 'my_path',
-                    'disabled' => false
-                ]
-            ]);
-
-        $this->virtualActionFactoryMock
+        $this->actionFactoryMock
             ->expects(self::once())
             ->method('create')
-            ->with('my/path', 'my_path')
-            ->willReturn(null);
+            ->with('mytype', []);
 
-        $this->router->match($this->requestMock);
+        $this->router->handleAction('mytype', 'mypath');
     }
 }

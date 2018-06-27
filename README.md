@@ -70,6 +70,8 @@ class View extends Action
 
 ## Features
 
+### Handles
+
 Besides the much simpler creation of custom routes, every route will get a few layout handles set:
 * "default"
 * "virtual_controller"
@@ -94,5 +96,40 @@ Routes can also be disabled by setting `disabled=true` in the configuration:
     <controller path="example/page/view" disabled="true" />
 </controllers>
 ```
+
+### Forwards
+
+Another feature is the possibility of creating forwards without creating a controller.
+Forwards are needed if you want to display another URL for a page. (e.g. 'my/shoppingcart' => 'checkout/cart')
+
+```xml
+<?xml version="1.0"?>
+<controllers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Renttek_VirtualControllers:etc/virtual_controllers.xsd">
+    
+    <forward path="my/shoppingcart"
+             module="checkout"
+             controller="cart"
+             action="index"/>
+</controllers>
+```
+
+Only the attributes 'path' and 'module' are required. 'controller' and 'action' will default to 'index' if no value is given.
+The above example could also be written without specifying 'action':
+
+```xml
+<?xml version="1.0"?>
+<controllers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Renttek_VirtualControllers:etc/virtual_controllers.xsd">
+    
+    <forward path="my/shoppingcart"
+             module="checkout"
+             controller="cart"/>
+</controllers>
+```
+
+Forwards are only URLs/path that **CAN** be called. It does not extend/manipulate url generation in any way.
+
+----
 
 All routes are merged by the path attribute, so it is possible to disable routes from other modules.

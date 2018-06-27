@@ -22,7 +22,10 @@ class Reader extends Filesystem
     public const FILENAME = 'virtual_controllers.xml';
 
     //@codingStandardsIgnoreLine
-    protected $_idAttributes = ['/controllers/controller' => 'id'];
+    protected $_idAttributes = [
+        '/controllers/controller' => 'path',
+        '/controllers/forward'    => 'path',
+    ];
 
     /**
      * {@inheritdoc}
