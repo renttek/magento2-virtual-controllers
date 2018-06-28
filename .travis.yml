@@ -8,3 +8,6 @@ install:
   - composer install --prefer-dist --ignore-platform-reqs
 script:
   - make
+cache:
+  directories:
+    - $HOME/.composer/cache/files
