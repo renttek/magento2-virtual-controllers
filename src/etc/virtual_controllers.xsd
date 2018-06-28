@@ -14,10 +14,10 @@
 
     <xs:element name="controllers">
         <xs:complexType>
-            <xs:sequence>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
                 <xs:element name="controller" type="controllerDefinition" maxOccurs="unbounded" minOccurs="0"/>
                 <xs:element name="forward" type="forwardDefinition" maxOccurs="unbounded" minOccurs="0"/>
-            </xs:sequence>
+            </xs:choice>
         </xs:complexType>
     </xs:element>
 
