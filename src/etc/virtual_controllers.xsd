@@ -23,15 +23,16 @@
 
     <xs:complexType name="controllerDefinition">
         <xs:attribute type="xs:string" name="path" use="required"/>
-        <xs:attribute type="handleType" name="handle"  />
+        <xs:attribute type="xs:string" name="title"/>
+        <xs:attribute type="handleType" name="handle"/>
         <xs:attribute type="xs:boolean" name="disabled"/>
     </xs:complexType>
 
     <xs:complexType name="forwardDefinition">
         <xs:attribute type="xs:string" name="path" use="required"/>
         <xs:attribute type="urlPartType" name="module" use="required"/>
-        <xs:attribute type="urlPartType" name="controller" default="index"/>
-        <xs:attribute type="urlPartType" name="action" default="index"/>
+        <xs:attribute type="urlPartType" name="controller"/>
+        <xs:attribute type="urlPartType" name="action"/>
         <xs:attribute type="xs:boolean" name="disabled"/>
     </xs:complexType>
 </xs:schema>

@@ -49,6 +49,7 @@ class Converter implements ConverterInterface
                 return [
                     'path'   => $item['path'],
                     'handle' => $item['handle'] ?? null,
+                    'title'  => $item['title'] ?? null,
                 ];
             }
         );
@@ -70,8 +71,8 @@ class Converter implements ConverterInterface
                 return [
                     'path'       => $item['path'],
                     'module'     => $item['module'],
-                    'controller' => $item['controller'] ?? 'index',
-                    'action'     => $item['action'] ?? 'index',
+                    'controller' => $item['controller'] ?? null,
+                    'action'     => $item['action'] ?? null,
                 ];
             }
         );

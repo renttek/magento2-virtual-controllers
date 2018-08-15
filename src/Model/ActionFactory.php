@@ -61,7 +61,8 @@ class ActionFactory
             Virtual::class,
             [
                 'path'   => $config['path'],
-                'handle' => $config['handle']
+                'handle' => $config['handle'],
+                'title'  => $config['title'],
             ]
         );
     }

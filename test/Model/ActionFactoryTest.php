@@ -47,14 +47,16 @@ class ActionFactoryTest extends TestCase
                 Virtual::class,
                 [
                     'path'   => 'mypath',
-                    'handle' => 'myhandle'
+                    'handle' => 'myhandle',
+                    'title'  => 'mytitle',
                 ]
             );
 
         $this->actionFactory->createVirtualAction(
             [
-                'path' => 'mypath',
-                'handle' => 'myhandle'
+                'path'   => 'mypath',
+                'handle' => 'myhandle',
+                'title'  => 'mytitle',
             ]
         );
     }

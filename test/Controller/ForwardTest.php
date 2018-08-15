@@ -85,24 +85,4 @@ class ForwardTest extends TestCase
 
         (new Forward($this->httpRequestMock, '', '', 'action'))->execute();
     }
-
-    public function testControllerDefaultsToIndexWhenNoneGiven()
-    {
-        $this->httpRequestMock
-            ->expects(self::once())
-            ->method('setControllerName')
-            ->with('index');
-
-        (new Forward($this->httpRequestMock, '', null))->execute();
-    }
-
-    public function testActionDefaultsToIndexWhenNoneGiven()
-    {
-        $this->httpRequestMock
-            ->expects(self::once())
-            ->method('setActionName')
-            ->with('index');
-
-        (new Forward($this->httpRequestMock, '', '', null))->execute();
-    }
 }

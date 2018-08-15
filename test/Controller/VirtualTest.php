@@ -51,7 +51,7 @@ class VirtualTest extends TestCase
             ->method('addHandle')
             ->with('my_awesome_handle');
 
-        (new Virtual($this->resultPageFactoryMock, '', null, 'my_awesome_handle'))->execute();
+        (new Virtual($this->resultPageFactoryMock, '', null, null, 'my_awesome_handle'))->execute();
     }
 
     public function testAddsDefaultDefaultHandleOnResultPageIfNoHandleGiven()

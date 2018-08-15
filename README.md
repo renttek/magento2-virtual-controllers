@@ -114,19 +114,7 @@ Forwards are needed if you want to display another URL for a page. (e.g. 'my/sho
 </controllers>
 ```
 
-Only the attributes 'path' and 'module' are required. 'controller' and 'action' will default to 'index' if no value is given.
-The above example could also be written without specifying 'action':
-
-```xml
-<?xml version="1.0"?>
-<controllers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="urn:magento:module:Renttek_VirtualControllers:etc/virtual_controllers.xsd">
-    
-    <forward path="my/shoppingcart"
-             module="checkout"
-             controller="cart"/>
-</controllers>
-```
+In V1 the attributes `controller` and `action` defaulted to 'index' if not specified. In V2 this is not the case!
 
 Forwards are only URLs/path that **CAN** be called. It does not extend/manipulate url generation in any way.
 

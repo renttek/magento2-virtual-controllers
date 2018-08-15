@@ -50,8 +50,8 @@ class Forward implements ActionInterface
     ) {
         $this->request = $request;
         $this->module = $module;
-        $this->controller = $controller ?? 'index';
-        $this->action = $action ?? 'index';
+        $this->controller = $controller;
+        $this->action = $action;
     }
 
     /**
@@ -65,5 +65,18 @@ class Forward implements ActionInterface
         $this->request->setControllerName($this->controller);
         $this->request->setActionName($this->action);
         $this->request->setDispatched(false);
+
+        $this->request->setRequestUri($this->getNewRequestUri());
+        $this->request->setPathInfo();
+    }
+
+    /**
+     * Builds the new request uri
+     *
+     * @return string
+     */
+    private function getNewRequestUri() : string
+    {
+        return implode('/', array_filter([$this->module, $this->controller, $this->action]));
     }
 }
