@@ -2,6 +2,7 @@
 
 namespace Renttek\VirtualControllers\Model\Config;
 
+use DOMXPath;
 use Magento\Framework\Config\ConverterInterface;
 use Renttek\VirtualControllers\Model\Config;
 
@@ -23,7 +24,7 @@ class Converter implements ConverterInterface
      */
     public function convert($source) : array
     {
-        $xpath = new \DOMXPath($source);
+        $xpath = new DOMXPath($source);
 
         $config = [
             Config::CONTROLLER => $this->parseControllerConfig($xpath),

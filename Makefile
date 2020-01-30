@@ -17,7 +17,7 @@ cs:
 
 md:
 	@vendor/bin/phpmd src text cleancode,codesize,design,naming,unusedcode
-	@vendor/bin/phpmd test text cleancode,codesize,design,naming,unusedcode
+	@vendor/bin/phpmd test text cleancode,codesize,design,unusedcode
 	@echo [OK] PHPMD
 
 .PHONY: all test static lint cs md
