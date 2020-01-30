@@ -8,6 +8,8 @@ namespace Renttek\VirtualControllers\Controller;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\ResultInterface;
 
 /**
  * Class Forward
@@ -20,12 +22,12 @@ class Forward implements ActionInterface
     private $module;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $controller;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $action;
 
@@ -56,8 +58,10 @@ class Forward implements ActionInterface
 
     /**
      * Forward a request
+     *
+     * @return ResultInterface|ResponseInterface|void
      */
-    public function execute() : void
+    public function execute()
     {
         $this->request->initForward();
         $this->request->setParams([]);

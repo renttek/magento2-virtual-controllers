@@ -2,6 +2,7 @@
 
 namespace Renttek\VirtualControllers\Model\Config;
 
+use DOMNodeList;
 use DOMXPath;
 use Magento\Framework\Config\ConverterInterface;
 use Renttek\VirtualControllers\Model\Config;
@@ -94,7 +95,10 @@ class Converter implements ConverterInterface
             return !filter_var($node['disabled'] ?? false, FILTER_VALIDATE_BOOLEAN);
         };
 
-        $nodes = iterator_to_array($xpath->query($query));
+        /** @var DOMNodeList $nodeList */
+        $nodeList = $xpath->query($query);
+
+        $nodes = iterator_to_array($nodeList);
         $nodes = array_map('\getDomNodeAttributeValues', $nodes);
         $nodes = array_filter($nodes, $disabledFilter);
 

@@ -1,0 +1,10 @@
+parameters:
+    level: max
+    paths:
+        - src
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Call to an undefined method Magento\\Framework\\App\\RequestInterface::.*#'
+        - '#.* expects string, Magento\\Framework\\Phrase given.*#'
+        - '~Parameter #1 \$name of method Magento\\Framework\\App\\RequestInterface::setActionName\(\) expects string, string\|null given\.~'

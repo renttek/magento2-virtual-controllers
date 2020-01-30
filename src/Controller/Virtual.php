@@ -48,9 +48,11 @@ class Virtual implements ActionInterface
         string $defaultHandle = 'virtual_controller'
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->handle = trim(preg_replace('/[^A-Za-z0-9\_]/', '_', $handle ?? $path), '_');
         $this->title = $title;
         $this->defaultHandle = $defaultHandle;
+
+        $handle = preg_replace('/[^A-Za-z0-9\_]/', '_', $handle ?? $path) ?? '';
+        $this->handle = trim($handle, '_');
     }
 
     /**
