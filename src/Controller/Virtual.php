@@ -6,9 +6,6 @@ use Magento\Framework\App\ActionInterface;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
-/**
- * Class Virtual
- */
 class Virtual implements ActionInterface
 {
     /**
@@ -31,15 +28,6 @@ class Virtual implements ActionInterface
      */
     private $title;
 
-    /**
-     * Index constructor.
-     *
-     * @param PageFactory $resultPageFactory
-     * @param string      $path
-     * @param null|string $handle
-     * @param null|string $title
-     * @param string      $defaultHandle
-     */
     public function __construct(
         PageFactory $resultPageFactory,
         string $path,

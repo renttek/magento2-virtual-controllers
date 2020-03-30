@@ -2,17 +2,22 @@
 
 namespace Renttek\VirtualControllers\Controller;
 
+use Magento\Framework\App\ActionFactory as Action;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\RouterInterface;
-use Renttek\VirtualControllers\Model\Config;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Renttek\VirtualControllers\Model\ActionFactory;
+use Renttek\VirtualControllers\Model\Config;
 
 /**
  * Class Router
  */
-class Router implements RouterInterface
+class Router extends \Magento\UrlRewrite\Controller\Router
 {
     /**
      * @var Config
@@ -22,18 +27,26 @@ class Router implements RouterInterface
     /**
      * @var ActionFactory
      */
-    private $actionFactory;
+    private $virtualActionFactory;
 
     /**
-     * Router constructor.
-     *
-     * @param Config               $config
-     * @param ActionFactory $actionFactory
+     * @var bool
      */
-    public function __construct(Config $config, ActionFactory $actionFactory)
-    {
-        $this->config = $config;
-        $this->actionFactory = $actionFactory;
+    protected $dispatched;
+
+    public function __construct(
+        Action $actionFactory,
+        UrlInterface $url,
+        StoreManagerInterface $storeManager,
+        ResponseInterface $response,
+        UrlFinderInterface $urlFinder,
+        ActionFactory $virtualActionFactory,
+        Config $config
+    ) {
+        $this->config               = $config;
+        $this->virtualActionFactory = $virtualActionFactory;
+
+        parent::__construct($actionFactory, $url, $storeManager, $response, $urlFinder);
     }
 
     /**
@@ -43,14 +56,22 @@ class Router implements RouterInterface
      *
      * @return ActionInterface|null
      *
+     * @throws NoSuchEntityException
+     *
      * @codeCoverageIgnore
      */
-    public function match(RequestInterface $request) : ?ActionInterface
+    public function match(RequestInterface $request)
     {
-        $path = trim($request->getPathInfo() ?? '', '/');
+        if (!$this->dispatched) {
+            $path             = trim($request->getOriginalPathInfo() ?? '', '/');
+            $this->dispatched = true;
 
-        return $this->handleAction(Config::CONTROLLER, $path)
-            ?? $this->handleAction(Config::FORWARD, $path);
+            return $this->handleAction(Config::CONTROLLER, $path)
+                ?? $this->handleAction(Config::FORWARD, $path)
+                ?? parent::match($request);
+        }
+
+        return null;
     }
 
     /**
@@ -61,12 +82,11 @@ class Router implements RouterInterface
      *
      * @return ActionInterface|null
      */
-    public function handleAction(string $type, string $path) : ?ActionInterface
+    public function handleAction(string $type, string $path): ?ActionInterface
     {
         $config = $this->config->get($type)[$path] ?? null;
-
         return $config !== null
-            ? $this->actionFactory->create($type, $config)
+            ? $this->virtualActionFactory->create($type, $config)
             : null;
     }
 }

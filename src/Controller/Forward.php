@@ -1,7 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * Copyright © 2018 Neusta. All rights reserved.
- */
 
 namespace Renttek\VirtualControllers\Controller;
 
@@ -11,9 +8,6 @@ use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 
-/**
- * Class Forward
- */
 class Forward implements ActionInterface
 {
     /**
@@ -36,14 +30,6 @@ class Forward implements ActionInterface
      */
     private $request;
 
-    /**
-     * Forward constructor.
-     *
-     * @param RequestInterface $request
-     * @param string           $module
-     * @param null|string      $controller
-     * @param null|string      $action
-     */
     public function __construct(
         RequestInterface $request,
         string $module,
@@ -74,11 +60,6 @@ class Forward implements ActionInterface
         $this->request->setPathInfo();
     }
 
-    /**
-     * Builds the new request uri
-     *
-     * @return string
-     */
     private function getNewRequestUri() : string
     {
         return implode('/', array_filter([$this->module, $this->controller, $this->action]));
